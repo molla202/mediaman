@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      target: build
+    ports:
+      - "8083:8080"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - ./bash_scripts:/app/bash_scripts
+      - ./.env:/app/.env
+      - ../studio_runner/.env:/app/runner.env
+    depends_on:
+      - db
+    env_file:
+      - ./.env
+  db:
+    image: mongo
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
+
+networks:
+  default:
+    external:
+      name: test
