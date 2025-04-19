@@ -3,24 +3,24 @@
 NETWORK_NAME="media-node-network"
 CURRENT_DIR="$(pwd)"
 
-start_media-node () {
+start_media-node() {
     source .env && docker compose up -d
 }
 
-setup_media-node () {
-    check_os () {
+setup_media-node() {
+    check_os() {
         echo "-----------------------------"
         echo "Checking for OS"
         echo "-----------------------------"
         if [[ "$OSTYPE" != "linux-gnu"* ]]; then
-                echo "❗Unsupported OS. This script is intended for Linux systems only."
-                exit 1
+            echo "❗Unsupported OS. This script is intended for Linux systems only."
+            exit 1
         else
             echo $OSTYPE
         fi
     }
 
-    #OS check
+    # OS check
     check_os
 
     if [ ! -f "$CURRENT_DIR/.env" ]; then
@@ -38,23 +38,19 @@ setup_media-node () {
     sudo apt install apt-transport-https ca-certificates curl software-properties-common jq -y
 
     # Check if nginx is installed
-    if ! command -v nginx &> /dev/null
-    then
+    if ! command -v nginx &> /dev/null; then
         echo "nginx could not be found, installing nginx..."
         sudo apt install nginx -y
     else
         echo "nginx is already installed."
     fi
 
-
     echo "\n-----------------------------"
     echo "Installing Docker"
     echo "-----------------------------\n"
 
-
     # Check if Docker is installed
-    if ! command -v docker &> /dev/null
-    then
+    if ! command -v docker &> /dev/null; then
         echo "Docker could not be found, installing Docker..."
         sudo apt update
         curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
@@ -69,14 +65,12 @@ setup_media-node () {
         echo "Docker is already installed."
     fi
 
-
     echo "-----------------------------"
     echo "Checking for docker-compose installation"
     echo "-----------------------------"
 
     # Check if Docker Compose is installed
-    if ! command -v docker compose &> /dev/null
-    then
+    if ! command -v docker compose &> /dev/null; then
         echo "docker-compose could not be found, installing docker-compose..."
         mkdir -p ~/.docker/cli-plugins/
         curl -SL https://github.com/docker/compose/releases/download/v2.3.3/docker-compose-linux-x86_64 -o ~/.docker/cli-plugins/docker-compose
@@ -140,7 +134,6 @@ setup_media-node () {
     sudo systemctl enable nginx
     sudo systemctl start nginx
 
-
     echo "Installing certbot for SSL certificate..."
     sudo apt install certbot python3-certbot-nginx -y
 
@@ -159,58 +152,62 @@ setup_media-node () {
 
     PORT=${PORT:-8081}
     RTMP_PORT=${RTMP_PORT:-1935}
-    MAX_UPLOAD_SIZE=${MAX_UPLOAD_SIZE:-2048}
+    MAX_UPLOAD_SIZE=${MAX_UPLOAD_SIZE:-2048M}
     WS_PORT=${WS_PORT:-8085}
 
     # Create nginx configuration
-    sudo bash -c "cat > /etc/nginx/sites-available/media-node << 'EOL'
-    server {
-        server_name $SERVER_NAME;
-        location / {
-            client_max_body_size ${MAX_UPLOAD_SIZE}M;
-            proxy_pass http://0.0.0.0:$PORT\$uri\$is_args\$args;
-        }
-        location /ws/ {
-            proxy_pass http://0.0.0.0:$PORT\$uri\$is_args\$args;
-            proxy_http_version 1.1;
-            proxy_set_header Upgrade \$http_upgrade;
-            proxy_set_header Connection \"upgrade\";
-            proxy_set_header Host \$host;
-            proxy_cache_bypass \$http_upgrade;
-        }
+    sudo bash -c "cat > /etc/nginx/sites-available/media-node <<'EOL'
+server {
+    server_name $SERVER_NAME;
+    location / {
+        client_max_body_size $MAX_UPLOAD_SIZE;
+        proxy_pass http://0.0.0.0:$PORT\$request_uri;
     }
-    EOL"
+    location /ws/ {
+        proxy_pass http://0.0.0.0:$WS_PORT;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection \"Upgrade\";
+        proxy_set_header Host \$host;
+        proxy_cache_bypass \$http_upgrade;
+    }
+}
+EOL"
 
     sudo rm -f /etc/nginx/sites-enabled/default
     sudo rm -f /etc/nginx/sites-enabled/media-node
     sudo ln -s /etc/nginx/sites-available/media-node /etc/nginx/sites-enabled/
-    sudo nginx -t
 
-    IP_ADDRESS=$(curl -4 -sSL ifconfig.me)
-    echo -e "\n\n"
-    read -p "Please make sure you have pointed your domain name to this server's IP address ($IP_ADDRESS) (only if you given the domain), press enter to confirm"
-    if [ ! -z "$DOMAIN_NAME" ]; then
-        echo "Generating SSL certificate for $DOMAIN_NAME..."
-        sudo certbot --nginx -d $DOMAIN_NAME
-    else
+    # Test nginx configuration
+    if sudo nginx -t; then
+        IP_ADDRESS=$(curl -4 -sSL ifconfig.me)
         echo -e "\n\n"
-        echo 'If you want to manually point domain to medianode API,
-        make sure you update /etc/nginx/sites-available/media-node with the domain 
-        and generate certificates using below command
-        
-    sudo certbot --nginx
-    '
+        read -p "Please make sure you have pointed your domain name to this server's IP address ($IP_ADDRESS) (only if you given the domain), press enter to confirm"
+
+        if [ ! -z "$DOMAIN_NAME" ]; then
+            echo "Generating SSL certificate for $DOMAIN_NAME..."
+            sudo certbot --nginx -d $DOMAIN_NAME
+        else
+            echo -e "\n\n"
+            echo 'If you want to manually point domain to medianode API,
+            make sure you update /etc/nginx/sites-available/media-node with the domain
+            and generate certificates using below command
+
+            sudo certbot --nginx
+            '
+        fi
+
+        sudo systemctl restart nginx
+
+        echo "-----------------------------"
+        echo "MediaNode setup completed"
+        echo "-----------------------------"
+    else
+        echo "Nginx configuration test failed. Please check the configuration file."
     fi
-
-    sudo systemctl start nginx
-
-    echo "-----------------------------"
-    echo "MediaNode setup completed"
-    echo "-----------------------------"
-    
 }
 
-register_media-node () {
+register_media-node() {
     bash ./scripts/register.sh
 }
 
@@ -231,7 +228,7 @@ fi
 if [ "$arg" == "setup" ]; then
     echo "Setting up media node..."
     setup_media-node
-    
+
 elif [ "$arg" == "start" ]; then
     echo "Starting media node..."
     start_media-node
@@ -239,7 +236,7 @@ elif [ "$arg" == "start" ]; then
 elif [ "$arg" == "register" ]; then
     echo "Registering media node..."
     register_media-node
-        
+
 else
     echo "Invalid argument. Use 'setup', 'start' or 'register'."
     exit 1
