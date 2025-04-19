@@ -1,0 +1,29 @@
+{
+  "name": "media_node_register",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "register": "ts-node register_media_node.ts",
+    "deposit": "ts-node deposit_media_node.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
+  "dependencies": {
+    "@cosmjs/proto-signing": "^0.33.1",
+    "@cosmjs/stargate": "^0.33.1",
+    "@types/node": "^22.14.0",
+    "@types/yargs": "^17.0.33",
+    "crypto": "^1.0.1",
+    "ts-node": "^10.9.2",
+    "tsc-node": "^0.0.3",
+    "typescript": "^5.8.3",
+    "yargs": "^17.7.2"
+  },
+  "devDependencies": {
+    "@protobuf-ts/plugin": "^2.9.5",
+    "ts-proto": "^2.6.1"
+  }
+}
