@@ -164,7 +164,7 @@ server {
         proxy_pass http://0.0.0.0:$PORT\$request_uri;
     }
     location /ws/ {
-        proxy_pass http://0.0.0.0:$WS_PORT;
+        proxy_pass http://0.0.0.0:$PORT;
         proxy_http_version 1.1;
         proxy_set_header Upgrade \$http_upgrade;
         proxy_set_header Connection \"Upgrade\";
