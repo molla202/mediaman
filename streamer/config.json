@@ -1,0 +1,413 @@
+{
+  "service_name": "OmniFlix.live",
+  "stream_encoder": "OmniFlix.studio",
+  "root_dir": "/home/ubuntu/media-node-data",
+  "stream_id": "null",
+  "fonts_dir": "/home/ubuntu/fonts",
+  "default_playlist": "/home/ubuntu/media-node-data/default-playlist.json",
+  "backend_url": "http://localhost:8090",
+  "runner_url": "http://localhost:8091",
+  "stream_quality": "SD",
+  "default_video_file": "null",
+  "ads": {
+    "enabled": false,
+    "show_back_in": {
+      "enabled": false,
+      "SD": {
+        "position": "top_right",
+        "filters": [
+          {
+            "type": "drawbox",
+            "color": "orange@0.9",
+            "t": "max",
+            "format": "yuv420p",
+            "x": "1189",
+            "y": "59",
+            "w": "2",
+            "h": "60"
+          },
+          {
+            "type": "drawtext",
+            "text": "BACK IN \\: ",
+            "fontfile": "/OpenSans-Regular.ttf",
+            "fontsize": 16,
+            "fontcolor": "orange@0.9",
+            "x": "w-tw-100",
+            "y": "64",
+            "shadowcolor": "black@0.6",
+            "shadow_x": "1",
+            "shadow_y": "1",
+            "box": 1,
+            "boxcolor": "black@0.2",
+            "boxborderw": "9"
+          }
+        ]
+      },
+      "HD": {
+        "position": "top_right",
+        "filters": [
+          {
+            "type": "drawbox",
+            "color": "orange@0.9",
+            "t": "max",
+            "format": "yuv420p",
+            "x": "1189",
+            "y": "59",
+            "w": "2",
+            "h": "60"
+          },
+          {
+            "type": "drawtext",
+            "text": "BACK IN \\: ",
+            "fontfile": "/OpenSans-Regular.ttf",
+            "fontsize": 16,
+            "fontcolor": "orange@0.9",
+            "x": "w-tw-100",
+            "y": "64",
+            "shadowcolor": "black@0.6",
+            "shadow_x": "1",
+            "shadow_y": "1",
+            "box": 1,
+            "boxcolor": "black@0.2",
+            "boxborderw": "9"
+          }
+        ]
+      }
+    },
+    "interval": 900,
+    "play_program_logo": {
+      "enabled": false,
+      "file": ""
+    },
+    "show_channel_logo": {
+      "enable": false,
+      "file": "",
+      "duration": "5"
+    },
+    "min_duration": "120",
+    "max_duration": "180"
+  },
+  "logo": {
+    "enabled": false,
+    "input_resolutions": {
+      "SD": "1280x720",
+      "HD": "1920x1080"
+    },
+    "allowed_formats": "PNG",
+    "position": "top_right",
+    "input": {
+      "source": "logos/logo.mov"
+    },
+    "filters": {
+      "overlay": {
+        "x": "0",
+        "y": "0",
+        "format": "rgba"
+      },
+      "format": "yuva420p"
+    },
+    "concat_settings": {
+      "colorchannelmixer": "aa=1",
+      "format": "yuva420p",
+      "scale": {
+        "SD": "720",
+        "HD": "1080"
+      }
+    }
+  },
+  "watermark": {
+    "enabled": false,
+    "input_resolutions": {
+      "SD": "1280x720",
+      "HD": "1920x1080"
+    },
+    "allowed_formats": "PNG",
+    "position": "center_right",
+    "input": {
+      "source": "xtras/watermark.png"
+    },
+    "filters": {
+      "overlay": {
+        "x": "0",
+        "y": "0",
+        "format": "rgba"
+      },
+      "format": "yuva420p"
+    },
+    "concat_settings": {
+      "colorchannelmixer": "aa=1",
+      "format": "yuvaa420p",
+      "scale": {
+        "SD": "720",
+        "HD": "1080"
+      }
+    }
+  },
+  "show_time_code": false,
+  "text_scroll": {
+    "enabled": false,
+    "type": "drawtext",
+    "position": "bottom_center",
+    "fontfile": "Opensans-Regular.ttf",
+    "fontsize": 20,
+    "fontcolor": "ffcc00",
+    "x": "w-mod(max(t-4.5\\,0)*(w+tw)/30\\,(w+tw))",
+    "y": "h-line_h-15",
+    "shadow_x": 2,
+    "shadow_y": 2,
+    "shadowcolor": "",
+    "box": 1,
+    "boxcolor": "",
+    "boxborderw": "",
+    "textfile": "live_stream_text_scroll.txt"
+  },
+  "dynamic_overlay": {
+    "enable": false,
+    "input_resolutions": {
+      "SD": "1280x720",
+      "HD": "1920x1080"
+    },
+    "position": "bottom_right",
+    "allowed_formats": "mov",
+    "input": {
+      "source": "overlay/PLAYING-NOW/GFX_%05d.png",
+      "thread_queue_size": "16",
+      "framerate": "25",
+      "loop": "1"
+    },
+    "filters": {
+      "overlay": {
+        "x": "0",
+        "y": "0"
+      }
+    },
+    "concat_settings": {
+      "colorchannelmixer": "aa=1",
+      "format": "yuva420p",
+      "scale": {
+        "SD": "720",
+        "HD": "1080"
+      }
+    }
+  },
+  "program_info_overlay": {
+    "enabled": false,
+    "default_position": "top_right",
+    "SD": "program_info_overlay_styles.SD_top_right",
+    "HD": "program_info_overlay_styles.HD_top_right"
+  },
+  "program_info_overlay_styles": {
+    "SD_top_right": {
+      "quality": "SD",
+      "position": "top_right",
+      "for_categories": "movie, scene",
+      "filters": [
+        {
+          "type": "drawbox",
+          "color": "orange@0.9",
+          "t": "fill",
+          "format": "yuv420p",
+          "x": "1189",
+          "y": "59",
+          "w": "2",
+          "h": "60"
+        },
+        {
+          "type": "drawtext",
+          "text": "PLAYING NOW",
+          "fontfile": "/OpenSans-Regular.ttf",
+          "fontsize": 16,
+          "fontcolor": "orange@0.9",
+          "x": "w-tw-100",
+          "y": "64",
+          "shadowcolor": "black@0.6",
+          "shadow_x": "1",
+          "shadow_y": "1",
+          "box": 1,
+          "boxcolor": "black@0.2",
+          "boxborderw": "9",
+          "format": "yuv420p"
+        },
+        {
+          "type": "drawtext",
+          "text": "asset.title()",
+          "fontfile": "/Roboto-RegularItalic.ttf",
+          "fontsize": 18,
+          "fontcolor": "white@0.9",
+          "x": "w-tw-100",
+          "y": "93",
+          "shadowcolor": "black@0.6",
+          "shadow_x": "1",
+          "shadow_y": "1",
+          "box": 1,
+          "boxcolor": "black@0.2",
+          "boxborderw": "9",
+          "format": "yuv420p"
+        }
+      ]
+    },
+    "SD_top_left": {
+      "quality": "SD",
+      "position": "top_left",
+      "for_categories": "movie, scene",
+      "filters": [
+        {
+          "type": "drawbox",
+          "color": "orange@0.9",
+          "t": "fill",
+          "format": "yuv420p",
+          "x": "180",
+          "y": "99",
+          "w": "3",
+          "h": "100"
+        },
+        {
+          "type": "drawtext",
+          "text": "PLAYING NOW",
+          "fontfile": "/OpenSans-Regular.ttf",
+          "fontsize": 20,
+          "fontcolor": "orange@0.9",
+          "x": "183",
+          "y": "104",
+          "shadowcolor": "black@0.6",
+          "shadow_x": "1",
+          "shadow_y": "1",
+          "box": 1,
+          "boxcolor": "black@0.2",
+          "boxborderw": "9",
+          "format": "yuv420p"
+        },
+        {
+          "type": "drawtext",
+          "text": "asset.title()",
+          "fontfile": "/Roboto-RegularItalic.ttf",
+          "fontsize": 22,
+          "fontcolor": "white@0.9",
+          "x": "183",
+          "y": "133",
+          "shadowcolor": "black@0.6",
+          "shadow_x": "1",
+          "shadow_y": "1",
+          "box": 1,
+          "boxcolor": "black@0.2",
+          "boxborderw": "9",
+          "format": "yuv420p"
+        }
+      ]
+    },
+    "HD_top_right": {
+      "quality": "HD",
+      "position": "top_right",
+      "for_categories": "movie, scene",
+      "filters": [
+        {
+          "type": "drawbox",
+          "color": "orange@0.9",
+          "t": "fill",
+          "format": "yuv420p",
+          "x": "1909",
+          "y": "100",
+          "w": "2",
+          "h": "60"
+        },
+        {
+          "type": "drawtext",
+          "text": "PLAYING NOW",
+          "fontfile": "/OpenSans-Regular.ttf",
+          "fontsize": 16,
+          "fontcolor": "orange@0.9",
+          "x": "w-tw-100",
+          "y": "64",
+          "shadowcolor": "black@0.6",
+          "shadow_x": "1",
+          "shadow_y": "1",
+          "box": 1,
+          "boxcolor": "black@0.2",
+          "boxborderw": "9",
+          "format": "yuv420p"
+        },
+        {
+          "type": "drawtext",
+          "text": "asset.title()",
+          "fontfile": "/Roboto-RegularItalic.ttf",
+          "fontsize": 18,
+          "fontcolor": "white@0.9",
+          "x": "w-tw-100",
+          "y": "93",
+          "shadowcolor": "black@0.6",
+          "shadow_x": "1",
+          "shadow_y": "1",
+          "box": 1,
+          "boxcolor": "black@0.2",
+          "boxborderw": "9",
+          "format": "yuv420p"
+        }
+      ]
+    }
+  },
+  "stream_quality_settings": {
+    "SD": {
+      "resolution": "1280x720",
+      "bitrate": 4500000
+    },
+    "HD": {
+      "resolution": "1920x1080",
+      "bitrate": 6000000
+    }
+  },
+  "stream_logo": {
+    "enabled": false,
+    "HD": {
+      "file": "logo/file/path",
+      "duration": 35,
+      "timelimit": 35
+    },
+    "SD": {
+      "file": "sd/logo/file/path",
+      "duration": 22,
+      "timelimit": 22
+    }
+  },
+  "encoder_settings": {
+    "video": {
+      "codec": "libx264",
+      "preset": "ultrafast",
+      "bitrate": {
+        "SD": 4500000,
+        "HD": 6000000
+      },
+      "crf": 22,
+      "fps": 24
+    },
+    "audio": {
+      "codec": "aac",
+      "bitrate": 128,
+      "channels": 2,
+      "samplerate": 44100
+    }
+  },
+  "broadcast_config": {
+    "url": "rtmp://localhost:1935/live",
+    "key": "123"
+  },
+  "live_feed_config": {
+    "url": "rtmp://localhost:1936/123547/live_feed",
+    "key": "omniflix"
+  },
+  "simulcast": true,
+  "stream_destinations": [],
+  "slot_length": 10800,
+  "slots": [
+    {
+      "time": "00:00:00-23:59:59",
+      "name": "default",
+      "type": "filler",
+      "categories": [
+        "fillers"
+      ],
+      "fillers": []
+    }
+  ],
+  "playing_live_feed": false,
+  "broadcast_state": "stopped"
+}

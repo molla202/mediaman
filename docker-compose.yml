@@ -1,0 +1,49 @@
+version: '3.9'
+services:
+  app:
+    container_name: media_node
+    image: media_node
+    build:
+      dockerfile: Dockerfile
+      context: .
+      target: final
+    ports:
+      - ${RTMP_PORT}:1935 # RTMP
+      - ${PORT}:80 # Nginx - /api for studio /ipfs for ipfs
+    env_file:
+      - .env
+    volumes:
+      - data:/home
+      - stream_data:/mnt
+      - service_config:/etc/supervisor/conf.d
+      - nginx_config:/usr/local/openresty/nginx/conf
+    depends_on:
+      - db
+      - redis
+    networks:
+      - media-node-network
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+  db: 
+    container_name: mongo
+    image: mongo
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - media-node-network
+  redis:
+    container_name: redis
+    image: redis
+    networks:
+      - media-node-network
+
+volumes:
+  mongodb_data: 
+  data:
+  stream_data:
+  service_config:
+  nginx_config:
+networks:
+  media-node-network:
+    external: true

@@ -1,0 +1,13 @@
+version: '3.9'
+services:
+  streamer:
+    image: streamer
+    build: .
+    ports:
+      - 1936:1935
+      - 8080:8080
+      - 80:80
+
+networks:
+  test:
+    external: true
