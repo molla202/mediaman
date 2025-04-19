@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  app:
+    container_name: runner
+    build:
+      context: .
+      target: build
+    ports:
+      - 8082:8081
+    volumes:
+      - .:/app/runner
+      - ../assets:/app/assets
+      - ./entrypoint.sh:/app/runner/entrypoint.sh
+    env_file:
+      - ./.env
+    entrypoint: ["/bin/bash", "-c", "/app/runner/entrypoint.sh"]
+
+networks:
+  default:
+    external:
+      name: test
