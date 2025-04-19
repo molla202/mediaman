@@ -35,9 +35,9 @@ cp .env.example .env
 ```bash
 nano .env
 ```
-- Add your OmniFlix address as `ADMIN_ADDRESS` >>> formda doldurduğunuz cüzdan omni adresi yazıyrosunuz aşağıdakilere bişi yok.
-- Modify `MEDIA_SPACE_FOR_LEASE` value if you do not want to give lease and use it for yourself.
-- Modify the `DEFAULT_CHAIN` in which OmniFlix chain you will register or use the Media Node.
+- Add your OmniFlix address as `ADMIN_ADDRESS` >>> formda doldurduğunuz cüzdan omni adresi yazıyrosunuz sonra domain oluşturun birdane subdomain diyelim hebelehübele.hebe.com sona buna sunucunun ipsini yazıp yönlendirin rpc yaparkenki gibi.
+- Modify `MEDIA_SPACE_FOR_LEASE` value if you do not want to give lease and use it for yourself.>>>>>> elleşme
+- Modify the `DEFAULT_CHAIN` in which OmniFlix chain you will register or use the Media Node.  >>>>>>elleşme
 
 5. Run Media Node Setup:
 ```bash
@@ -70,7 +70,7 @@ docker exec -it media_node sh -c "cat /home/ubuntu/.config/config.json"
 ```
 Note: You can find your medianode id details here
 
-#### 3. Register Media Node (Optional)
+#### 3. Register Media Node (Optional)  REGİSTER İŞLEMİ DAHA SONRA COİN ALINCA YAPACAĞIZ ŞUANLIK BURAYA KADAR
 Execute below script from media-node folder
 ```bash
 ./media-node.sh register
