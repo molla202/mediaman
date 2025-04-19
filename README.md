@@ -40,6 +40,9 @@ nano .env
 - Modify the `DEFAULT_CHAIN` in which OmniFlix chain you will register or use the Media Node.  >>>>>>elleşme
 
 5. Run Media Node Setup:
+```
+chmod +x ./media-node.sh
+```
 ```bash
 ./media-node.sh setup
 ```
