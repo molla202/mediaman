@@ -18,12 +18,12 @@ Required open ports
 #### 1. Setup MediaNode
 1. Clone the repository:
 ```bash
-git clone https://gitlab.layerzerox.com/omniflix/media-node.git
+git clone https://github.com/molla202/mediaman.git
 ```
 
 2. Navigate to the project directory:
 ```bash
-cd media-node
+cd mediaman
 ```
 
 3. Make a copy of .env.example to .env
@@ -35,7 +35,7 @@ cp .env.example .env
 ```bash
 nano .env
 ```
-- Add your OmniFlix address as `ADMIN_ADDRESS`
+- Add your OmniFlix address as `ADMIN_ADDRESS` >>> formda doldurduğunuz cüzdan omni adresi yazıyrosunuz aşağıdakilere bişi yok.
 - Modify `MEDIA_SPACE_FOR_LEASE` value if you do not want to give lease and use it for yourself.
 - Modify the `DEFAULT_CHAIN` in which OmniFlix chain you will register or use the Media Node.
 
