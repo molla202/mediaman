@@ -1234,7 +1234,6 @@ const stopLiveStreams = (mediaSpace, user, cb) => {
         (next) => {
             liveStreamDBO.find({
                 media_space: mediaSpace._id,
-                status: 'LIVE',
             }, {}, {}, true, (error, result) => {
                 if (error) {
                     next({
@@ -1276,7 +1275,6 @@ const stopLiveStreams = (mediaSpace, user, cb) => {
         }, (liveStreams, next) => {
             liveStreamDBO.updateMany({
                 media_space: mediaSpace._id,
-                status: 'LIVE',
             }, {
                 $set: {
                     status: 'ENDED',
