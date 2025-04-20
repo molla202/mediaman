@@ -186,7 +186,7 @@ EOL"
 
         if [ ! -z "$DOMAIN_NAME" ]; then
             echo "Generating SSL certificate for $DOMAIN_NAME..."
-            sudo certbot --nginx -d $DOMAIN_NAME
+            sudo certbot --nginx -d $DOMAIN_NAME --non-interactive --agree-tos --register-unsafely-without-email
         else
             echo -e "\n\n"
             echo 'If you want to manually point domain to medianode API,
