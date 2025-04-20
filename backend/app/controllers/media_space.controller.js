@@ -422,7 +422,18 @@ const updateLeases = (existingUser, cb) => {
             });
         }, (lease, next) => {
             if (!lease) {
-                next(null, null, null);
+                userDBO.findOne({}, {}, {}, false, (error, user) => {
+                    if (error) {
+                        next({
+                            error: userError.findUserFailed,
+                            message: 'Error occurred while finding the user.',
+                        });
+                    } else if (user) {
+                        next(null, null, user);
+                    } else {
+                        next(null, null, null);
+                    }
+                });
             } else {
                 userDBO.findOne({
                     bc_account_address: lease.lessee,
@@ -515,24 +526,6 @@ const updateLeases = (existingUser, cb) => {
                 });
             }
         }, (mediaSpace, user, next) => {
-            userDBO.deleteMany({
-                media_space: mediaSpace._id,
-            }, {}, (error, result) => {
-                if (error) {
-                    next({
-                        error: userError.deleteUserFailed,
-                        message: 'Error occurred while deleting the user.',
-                    });
-                } else if (result) {
-                    next(null, mediaSpace, user);
-                } else {
-                    next({
-                        error: userError.deleteUserFailed,
-                        message: 'Error occurred while deleting the user.',
-                    });
-                }
-            });
-        }, (mediaSpace, user, next) => {
             if (user) {
                 liveStreamHelper.stopLiveStreams(mediaSpace, user, (error) => {
                     if (error) {
@@ -552,6 +545,24 @@ const updateLeases = (existingUser, cb) => {
                     next(null, mediaSpace, user);
                 });
             }
+        }, (mediaSpace, user, next) => {
+            userDBO.deleteMany({
+                media_space: mediaSpace._id,
+            }, {}, (error, result) => {
+                if (error) {
+                    next({
+                        error: userError.deleteUserFailed,
+                        message: 'Error occurred while deleting the user.',
+                    });
+                } else if (result) {
+                    next(null, mediaSpace, user);
+                } else {
+                    next({
+                        error: userError.deleteUserFailed,
+                        message: 'Error occurred while deleting the user.',
+                    });
+                }
+            });
         }, (mediaSpace, user, next) => {
             if (user) {
                 const fpcKey = stringUtils.randomString(10);
